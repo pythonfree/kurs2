@@ -56,7 +56,7 @@ $APPLICATION->SetTitle("Вакансии (Комплексный компоне�
 		"PREVIEW_TRUNCATE_LEN" => "",
 		"SEF_FOLDER" => "/vacancies/",
 		"SEF_MODE" => "Y",
-		"SEF_URL_TEMPLATES" => Array("detail"=>"#SEMINAR_ID#/","form"=>"#SEMINAR_ID#/register/","list"=>""),
+		"SEF_URL_TEMPLATES" => Array("detail"=>"#VACANCY_ID#/","form"=>"#VACANCY_ID#/register/","list"=>""),
 		"SET_LAST_MODIFIED" => "N",
 		"SET_STATUS_404" => "N",
 		"SET_TITLE" => "Y",

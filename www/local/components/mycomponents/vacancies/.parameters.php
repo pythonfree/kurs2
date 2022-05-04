@@ -54,13 +54,13 @@ $arComponentParameters = array(
 			),
 			"detail" => array(
 				"NAME" => GetMessage("T_IBLOCK_SEF_PAGE_NEWS_DETAIL"),
-				"DEFAULT" => "#SEMINAR_ID#/",
-				"VARIABLES" => array("ID"),
+				"DEFAULT" => "#VACANT_ID#/",
+				"VARIABLES" => ['VACANT_ID'],
 			),
 			"form" => array(
 				"NAME" => GetMessage("T_IBLOCK_SEF_PAGE_NEWS_SECTION"),
-				"DEFAULT" => "#SEMINAR_ID#/register/",
-				"VARIABLES" => array(),
+				"DEFAULT" => "#VACANT_ID#/register/",
+				"VARIABLES" => ['FORM_ID'],
 			),
 		),
 		"IBLOCK_TYPE" => array(

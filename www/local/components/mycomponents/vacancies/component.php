@@ -9,31 +9,36 @@
 /** @global CUser $USER */
 /** @global CMain $APPLICATION */
 
+// Массив настроек ЧПУ по умолчанию
 $arDefaultUrlTemplates404 = array(
 	"list" => "",
-	"detail" => "#SEMINAR_ID#/",
-	"form" => "#SEMINAR_ID#/register/",
+	"detail" => "#VACANT_ID#/",
+	"form" => "#VACANT_ID#/register/",
 );
 
 $arDefaultVariableAliases404 = [
     'detail' => [
-        'ELEMENT_ID' =>'ID'
+        'VACANT_ID' => 'ID'
+    ],
+    'form' => [
+        'FORM_ID' => 'ID'
     ]
 ];
 
 $arDefaultVariableAliases = array();
 
+// Массив переменных по умолчанию
 $arComponentVariables = array(
 	"FORM_ID",
-	"SEMINAR_ID",
+	"VACANT_ID",
 	"ELEMENT_CODE",
 );
 
 if($arParams["SEF_MODE"] == "Y")
 {
-	$arVariables = array();
+	$arVariables = [];
 
-    // Массив шалонов URL - адресов
+    // Массив шаблонов URL - адресов
 	$arUrlTemplates = CComponentEngine::makeComponentUrlTemplates($arDefaultUrlTemplates404, $arParams["SEF_URL_TEMPLATES"]);
 
 	$arVariableAliases = CComponentEngine::makeComponentVariableAliases($arDefaultVariableAliases404, $arParams["VARIABLE_ALIASES"]);
@@ -52,7 +57,7 @@ if($arParams["SEF_MODE"] == "Y")
 
 	if(!$componentPage)
 	{
-		$componentPage = "list"; // Значение по умолчанию, если вдруг не удалось определить по шаблонам
+		$componentPage = "list"; // Шаблон страницы по умолчанию, если вдруг не удалось определить по шаблонам
 	}
 
 	CComponentEngine::initComponentVariables($componentPage, $arComponentVariables, $arVariableAliases, $arVariables);
@@ -98,4 +103,4 @@ if($arParams["SEF_MODE"] == "Y")
 	);
 }
 
-$this->includeComponentTemplate($componentPage); // Передаем название файла
+$this->includeComponentTemplate($componentPage); // Передаем название файла шаблона
