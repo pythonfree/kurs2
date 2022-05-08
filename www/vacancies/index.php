@@ -2,9 +2,9 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Вакансии (Комплексный компонент)");
 ?><?$APPLICATION->IncludeComponent(
-	"mycomponents:vacancies", 
-	".default", 
-	array(
+	"mycomponents:vacancies",
+	".default",
+	Array(
 		"ADD_ELEMENT_CHAIN" => "N",
 		"ADD_SECTIONS_CHAIN" => "Y",
 		"AJAX_MODE" => "N",
@@ -18,24 +18,15 @@ $APPLICATION->SetTitle("Вакансии (Комплексный компоне�
 		"CACHE_TIME" => "36000000",
 		"CACHE_TYPE" => "N",
 		"CHECK_DATES" => "Y",
+		"COMPONENT_TEMPLATE" => ".default",
 		"DETAIL_ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"DETAIL_DISPLAY_BOTTOM_PAGER" => "N",
 		"DETAIL_DISPLAY_TOP_PAGER" => "N",
-		"DETAIL_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"DETAIL_FIELD_CODE" => array(0=>"",1=>"",),
 		"DETAIL_PAGER_SHOW_ALL" => "N",
 		"DETAIL_PAGER_TEMPLATE" => "",
 		"DETAIL_PAGER_TITLE" => "Страница",
-		"DETAIL_PROPERTY_CODE" => array(
-			0 => "WORKGRAPH",
-			1 => "VACANCY",
-			2 => "EDUCATION",
-			3 => "DESCRIPTION",
-			4 => "STAG",
-			5 => "",
-		),
+		"DETAIL_PROPERTY_CODE" => array(0=>"WORKGRAPH",1=>"VACANCY",2=>"EDUCATION",3=>"DESCRIPTION",4=>"STAG",5=>"",),
 		"DETAIL_SET_CANONICAL_URL" => "N",
 		"DISPLAY_BOTTOM_PAGER" => "N",
 		"DISPLAY_DATE" => "Y",
@@ -48,16 +39,10 @@ $APPLICATION->SetTitle("Вакансии (Комплексный компоне�
 		"IBLOCK_TYPE" => "vacancies",
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
 		"LIST_ACTIVE_DATE_FORMAT" => "d.m.Y",
-		"LIST_FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"LIST_FIELD_CODE" => array(0=>"",1=>"",),
 		"LIST_PREV_PICT_H" => "50",
 		"LIST_PREV_PICT_W" => "50",
-		"LIST_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"LIST_PROPERTY_CODE" => array(0=>"",1=>"",),
 		"MESSAGE_404" => "",
 		"META_DESCRIPTION" => "-",
 		"META_KEYWORDS" => "-",
@@ -72,6 +57,7 @@ $APPLICATION->SetTitle("Вакансии (Комплексный компоне�
 		"PREVIEW_TRUNCATE_LEN" => "",
 		"SEF_FOLDER" => "/vacancies/",
 		"SEF_MODE" => "Y",
+		"SEF_URL_TEMPLATES" => array("vacancies"=>"","vacancy"=>"#VACANT_ID#/","rezume"=>"#VACANT_ID#/resume/",),
 		"SET_LAST_MODIFIED" => "N",
 		"SET_STATUS_404" => "N",
 		"SET_TITLE" => "Y",
@@ -88,13 +74,8 @@ $APPLICATION->SetTitle("Вакансии (Комплексный компоне�
 		"USE_REVIEW" => "N",
 		"USE_RSS" => "N",
 		"USE_SEARCH" => "N",
-		"USE_SHARE" => "N",
-		"COMPONENT_TEMPLATE" => ".default",
-		"SEF_URL_TEMPLATES" => array(
-			"vacancies" => "",
-			"vacancy" => "#VACANT_ID#/",
-			"rezume" => "#VACANT_ID#/resume/",
-		)
-	),
-	false
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+		"USE_SHARE" => "N"
+	)
+);?>
+
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
