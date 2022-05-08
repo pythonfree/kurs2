@@ -47,20 +47,20 @@ $arComponentParameters = array(
 			"ELEMENT_ID" => Array("NAME" => GetMessage("NEWS_ELEMENT_ID_DESC")),
 		),
 		"SEF_MODE" => Array(
-			"list" => array(
+			"vacancies" => array(
 				"NAME" => GetMessage("T_IBLOCK_SEF_PAGE_NEWS"),
 				"DEFAULT" => "",
 				"VARIABLES" => array(),
 			),
-			"detail" => array(
+			"vacancy" => array(
 				"NAME" => GetMessage("T_IBLOCK_SEF_PAGE_NEWS_DETAIL"),
 				"DEFAULT" => "#VACANT_ID#/",
 				"VARIABLES" => ['VACANT_ID'],
 			),
-			"form" => array(
+			"rezume" => array(
 				"NAME" => GetMessage("T_IBLOCK_SEF_PAGE_NEWS_SECTION"),
-				"DEFAULT" => "#VACANT_ID#/register/",
-				"VARIABLES" => ['FORM_ID'],
+				"DEFAULT" => "#VACANT_ID#/rezume/",
+                "VARIABLES" => ['FORM_ID'],
 			),
 		),
 		"IBLOCK_TYPE" => array(

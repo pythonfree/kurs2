@@ -13,23 +13,53 @@
 $this->setFrameMode(true);
 ?>
 
-list
-
 <?$APPLICATION->IncludeComponent(
-    "bitrix:news.line",
-    "",
-    [
-        'CACHE_GROUPS'  => $arParams['CACHE_GROUPS'],
-        'CACHE_TIME'    => $arParams['CACHE_TIME'],
-        'CACHE_TYPE'    => $arParams['CACHE_TYPE'],
-        'IBLOCKS'       => [$arParams['IBLOCK_ID']],
-        'IBLOCK_TYPE'   => $arParams['IBLOCK_TYPE'],
-        'NEWS_COUNT'    => $arParams['NEWS_COUNT'],
-        'SORT_BY1'      => $arParams['SORT_BY1'],
-        'SORT_ORDER1'   => $arParams['SORT_ORDER1'],
-    ],
+    'mycomponents:vacancies.list',
+    '',
+    array(
+        'ACTIVE_DATE_FORMAT' => 'd.m.Y',
+        'CACHE_GROUPS' => $arParams['CACHE_GROUPS'],
+        'CACHE_TIME' => $arParams['CACHE_TIME'],
+        'CACHE_TYPE' => $arParams['CACHE_TYPE'],
+        'COMPONENT_TEMPLATE' => 'vacancies.list',
+        'DETAIL_URL' => '',
+        'FIELD_CODE' => array(
+            0 => '',
+            1 => 'PROPERTY_DESCRIPTION',
+            2 => 'PROPERTY_STAG',
+            3 => 'PROPERTY_WORKGRAPH',
+            4 => 'PROPERTY_EDUCATION',
+            5 => 'PROPERTY_VACANCY',
+            6 => '',
+        ),
+        'IBLOCKS' => [$arParams['IBLOCK_ID']],
+        'IBLOCK_TYPE' => $arParams['IBLOCK_TYPE'],
+        'NEWS_COUNT' => $arParams['NEWS_COUNT'],
+        'SORT_BY1' => $arParams['SORT_BY1'],
+        'SORT_BY2' => $arParams['SORT_BY2'],
+        'SORT_ORDER1' => $arParams['SORT_ORDER1'],
+        'SORT_ORDER2' => $arParams['SORT_ORDER2'],
+    ),
     $component
 );?>
+
+
+
+<?//$APPLICATION->IncludeComponent(
+//    "bitrix:news.line",
+//    "",
+//    [
+//        'CACHE_GROUPS'  => $arParams['CACHE_GROUPS'],
+//        'CACHE_TIME'    => $arParams['CACHE_TIME'],
+//        'CACHE_TYPE'    => $arParams['CACHE_TYPE'],
+//        'IBLOCKS'       => [$arParams['IBLOCK_ID']],
+//        'IBLOCK_TYPE'   => $arParams['IBLOCK_TYPE'],
+//        'NEWS_COUNT'    => $arParams['NEWS_COUNT'],
+//        'SORT_BY1'      => $arParams['SORT_BY1'],
+//        'SORT_ORDER1'   => $arParams['SORT_ORDER1'],
+//    ],
+//    $component
+//);?>
 
 
 

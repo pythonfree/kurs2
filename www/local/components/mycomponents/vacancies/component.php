@@ -11,18 +11,18 @@
 
 // Массив настроек ЧПУ по умолчанию
 $arDefaultUrlTemplates404 = array(
-	"list" => "",
-	"detail" => "#VACANT_ID#/",
-	"form" => "#VACANT_ID#/register/",
+	"vacancies" => "",
+	"vacancy" => "#VACANT_ID#/",
+	"rezume" => "#VACANT_ID#/resume/",
 );
 
 $arDefaultVariableAliases404 = [
-    'detail' => [
-        'VACANT_ID' => 'ID'
+    'vacancy' => [
+        'VACANT_ID' => 'VID'
     ],
-    'form' => [
-        'FORM_ID' => 'ID'
-    ]
+    'rezume' => [
+        'FORM_ID' => 'FID'
+    ],
 ];
 
 $arDefaultVariableAliases = array();
@@ -57,7 +57,7 @@ if($arParams["SEF_MODE"] == "Y")
 
 	if(!$componentPage)
 	{
-		$componentPage = "list"; // Шаблон страницы по умолчанию, если вдруг не удалось определить по шаблонам
+		$componentPage = "vacancies"; // Шаблон страницы по умолчанию, если вдруг не удалось определить по шаблонам
 	}
 
 	CComponentEngine::initComponentVariables($componentPage, $arComponentVariables, $arVariableAliases, $arVariables);
@@ -77,26 +77,26 @@ if($arParams["SEF_MODE"] == "Y")
 	$componentPage = "";
 
 	if(isset($arVariables["ELEMENT_ID"]) && intval($arVariables["ELEMENT_ID"]) > 0)
-		$componentPage = "detail";
+		$componentPage = "vacancy";
 	elseif(isset($arVariables["ELEMENT_CODE"]) && $arVariables["ELEMENT_CODE"] <> '')
-		$componentPage = "detail";
+		$componentPage = "vacancy";
 	elseif(
-        isset($arVariables["FORM_ID"])
-        && intval($arVariables["FORM_ID"]) > 0
+        isset($arVariables["REZUME_ID"])
+        && intval($arVariables["REZUME_ID"]) > 0
         && ($arVariables["ELEMENT_ID"])
         && intval($arVariables["ELEMENT_ID"]) > 0
     )
-        $componentPage = "form";
+        $componentPage = "rezume";
 	else
-        $componentPage = "list";
+        $componentPage = "vacancies";
 
 
 	$arResult = array(
 		"FOLDER" => "",
 		"URL_TEMPLATES" => array(
-			"list" => htmlspecialcharsbx($APPLICATION->GetCurPage()),
-			"detail" => htmlspecialcharsbx($APPLICATION->GetCurPage()."?".$arVariableAliases["ELEMENT_ID"]."=#ELEMENT_ID#"),
-			"form" => htmlspecialcharsbx($APPLICATION->GetCurPage()."?".$arVariableAliases["FORM_ID"]."=#FORM_ID#"),
+			"vacancies" => htmlspecialcharsbx($APPLICATION->GetCurPage()),
+			"vacancy" => htmlspecialcharsbx($APPLICATION->GetCurPage()."?".$arVariableAliases["ELEMENT_ID"]."=#ELEMENT_ID#"),
+			"rezume" => htmlspecialcharsbx($APPLICATION->GetCurPage()."?".$arVariableAliases["FORM_ID"]."=#FORM_ID#"),
 		),
 		"VARIABLES" => $arVariables,
 		"ALIASES" => $arVariableAliases

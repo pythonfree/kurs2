@@ -34,9 +34,6 @@ foreach($arResult["ITEMS"] as $arItem) {
     $arSections[$arItem['IBLOCK_SECTION_ID']]['ITEMS'][$arItem['ID']]['WORKGRAPH'] = $arItem['PROPERTY_WORKGRAPH_VALUE'];
     $arSections[$arItem['IBLOCK_SECTION_ID']]['ITEMS'][$arItem['ID']]['EDUCATION'] = $arItem['PROPERTY_EDUCATION_VALUE'];
 }
-//    echo '<pre>';
-//    print_r($arSections);
-//    echo '</pre>';
 ?>
 
 <?php foreach ($arSections as $section): ?>
