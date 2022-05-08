@@ -5,7 +5,7 @@ $APPLICATION->SetTitle("Вакансии");
 
 <?$APPLICATION->IncludeComponent(
 	"mycomponents:vacancies.list", 
-	"vacancies.list", 
+	"",
 	array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"CACHE_GROUPS" => "Y",
