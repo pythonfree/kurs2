@@ -1,6 +1,13 @@
 <?
 $aMenuLinks = Array(
 	Array(
+		"Рабочий стол", 
+		"/desktop.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
 		"Компания", 
 		"company/", 
 		Array(), 
@@ -24,13 +31,6 @@ $aMenuLinks = Array(
 	Array(
 		"Услуги", 
 		"services/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Контакты", 
-		"contacts/", 
 		Array(), 
 		Array(), 
 		"" 
