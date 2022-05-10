@@ -1,4 +1,9 @@
-www/bitrix
+www/bitrix/*
 www/access.log
 www/error.log
 /.idea
+/vendor/
+/access.log
+/error.log
+www/upload/
+!www/bitrix/wizards/

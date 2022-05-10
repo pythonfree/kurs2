@@ -7,6 +7,7 @@
     <content url="file://$MODULE_DIR$/www/bitrix/modules/form" />
     <content url="file://$MODULE_DIR$/www/bitrix/modules/iblock" />
     <content url="file://$MODULE_DIR$/www/bitrix/modules/main" />
+    <content url="file://$MODULE_DIR$/www/bitrix/wizards" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
