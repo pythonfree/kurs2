@@ -1,6 +1,6 @@
 <?
 $MESS['SO_INIT_TITLE'] = 'Выберите тип операции:';
-$MESS['SO_SS_REQ_FIELDS'] = "Поля, обязательные для заполнения.";
+$MESS['REQ_FIELDS'] = "Поля, обязательные для заполнения.";
 $MESS['SO_SS_CHOOSE_OPERATOR'] = "оператор:";
 $MESS['EFN_INIT_TITLE'] = 'Введите первый операнд:';
 $MESS['ESN_INIT_TITLE'] = 'Введите второй операнд:';

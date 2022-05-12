@@ -12,23 +12,31 @@ class SelectOperation extends CWizardStep
         $this->SetNextStep("enter_first_num");
     }
 
-    function showStep() {
+    function ShowStep() {
         $this->content .= "<table class='wizard-data-table'>";
         $this->content .= "<tr><th align = 'right'><span class='wizard-required'>*</span>" . GetMessage('SO_SS_CHOOSE_OPERATOR') . "</th><td>";
-        $this->content .= '<select name="operator">';
+
         $operations = [
-            'summ' => '+',
+            'sum' => '+',
             'sub' => '-',
             'mult' => '*',
             'div' => '/'
         ];
-        foreach ($operations as $opKey => $opVal) {
-            $this->content .= '<option value="' . $opKey . '">' . $opVal . '</option>';
-        }
-        $this->content .= '</select>';
+        $this->content .= WizardTools::ShowSelectField($this, "OPERATOR", array_flip($operations)) . "</td></tr>";
+
+
         $this->content .= "</td></tr>";
         $this->content .= "</table>";
-        $this->content .= "<br/><div class='wizard-note-box'><span class='wizard-required'>*</span>" . GetMessage('SO_SS_REQ_FIELDS') . "</div>";
+        $this->content .= "<br/><div class='wizard-note-box'><span class='wizard-required'>*</span>" . GetMessage('REQ_FIELDS') . "</div>";
+
+    }
+
+    function OnPostForm() {
+        $wizard =& $this->GetWizard();
+        $operator = $wizard->GetVar("OPERATOR");
+        if (empty($operator)) {
+            $this->SetError('Выберите тип операции', 'OPERATOR');
+        }
     }
 }
 
@@ -45,6 +53,23 @@ class EnterFirstNum extends CWizardStep
         $this->SetPrevStep("select_operation");
         $this->SetNextStep("enter_second_num");
     }
+
+    function ShowStep()
+    {
+        $this->content .= "<table class='wizard-data-table'>";
+        $this->content .= "<tr><th align='right'><span class='wizard-required'>*</span>" . 'Введите число:' . "</th><td>" . $this->ShowInputField("text", "F_OPERAND", ["size" => 25]) . "</td></tr>";
+        $this->content .= "</table>";
+        $this->content .= "<br/><div class='wizard-note-box'><span class='wizard-required'>*</span>" . GetMessage('REQ_FIELDS') . "</div>";
+    }
+
+    function OnPostForm()
+    {
+        $wizard =& $this->GetWizard();
+        $fOperand = $wizard->GetVar("F_OPERAND");
+        if (empty((int)$fOperand)) {
+            $this->SetError('Не удалось получить число.', 'F_OPERAND');
+        }
+    }
 }
 
 class EnterSecondNum extends CWizardStep
@@ -58,6 +83,23 @@ class EnterSecondNum extends CWizardStep
 
         $this->SetPrevStep("enter_first_num");
         $this->SetNextStep("show_operation");
+    }
+
+    function ShowStep()
+    {
+        $this->content .= "<table class='wizard-data-table'>";
+        $this->content .= "<tr><th align='right'><span class='wizard-required'>*</span>" . 'Введите число:' . "</th><td>" . $this->ShowInputField("text", "S_OPERAND", ["size" => 25]) . "</td></tr>";
+        $this->content .= "</table>";
+        $this->content .= "<br/><div class='wizard-note-box'><span class='wizard-required'>*</span>" . GetMessage('REQ_FIELDS') . "</div>";
+    }
+
+    function OnPostForm()
+    {
+        $wizard =& $this->GetWizard();
+        $sOperand = $wizard->GetVar("S_OPERAND");
+        if (empty((int)$sOperand)) {
+            $this->SetError('Не удалось получить число.', 'S_OPERAND');
+        }
     }
 }
 
@@ -74,6 +116,28 @@ class ShowOperation extends CWizardStep
         $this->SetFinishStep("calc_log_showresult");
         $this->SetFinishCaption(GetMessage("SHO_INIT_FINISH_CAPTION"));
     }
+
+    function ShowStep()
+    {
+        $wizard =& $this->GetWizard();
+        $fOperand = $wizard->GetVar("F_OPERAND");
+        $sOperand = $wizard->GetVar("S_OPERAND");
+        $operator = $wizard->GetVar("OPERATOR");
+
+        $this->content .= "<table class='wizard-data-table'>";
+        $this->content .= "<tr><th align='right'>" . 'Операция:' . "</th><td>" . $fOperand  . ' ' . $operator . ' ' . $sOperand . "</td></tr>";
+        $this->content .= "</table>";
+    }
+
+    function OnPostForm()
+    {
+        $wizard =& $this->GetWizard();
+        $sOperand = $wizard->GetVar("S_OPERAND");
+        if (empty((int)$sOperand)) {
+            $this->SetError('Не удалось получить число.', 'S_OPERAND');
+        }
+    }
+
 }
 
 class CalcLogShowResult extends CWizardStep
@@ -89,3 +153,39 @@ class CalcLogShowResult extends CWizardStep
         $this->SetCancelCaption(GetMessage("CSLSR_INIT_CANCEL_CAPTION"));
     }
 }
+
+// Вспомогательные методы
+class WizardTools
+{
+    public static function ShowSelectField($obj, $name, $arValues = [], $arAttributes = [])
+    {
+        $wizard = $obj->GetWizard();
+        $obj->SetDisplayVars([$name]);
+
+        $varValue = $wizard->GetVar($name);
+        $selectedValues = (
+        $varValue !== null && $varValue != "" ?
+            $varValue :
+            (
+            $varValue === "" ?
+                [] :
+                $wizard->GetDefaultVar($name)
+            )
+        );
+
+        if (!is_array($selectedValues))
+            $selectedValues = [$selectedValues];
+
+        $prefixName = $wizard->GetRealName($name);
+        $strReturn .= '<select name="'.htmlspecialcharsbx($prefixName).'"'.$obj->_ShowAttributes($arAttributes).'>';
+
+        foreach ($arValues as $optionValue => $optionName)
+            $strReturn .= '<option value="'.htmlspecialcharsEx($optionValue).'"'.(in_array($optionValue, $selectedValues) ? " selected=\"selected\"" :"").'>'.htmlspecialcharsEx($optionName).'</option>
+        ';
+
+        $strReturn .= '</select>';
+
+        return $strReturn;
+    }
+}
+
