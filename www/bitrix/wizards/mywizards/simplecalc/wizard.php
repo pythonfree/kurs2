@@ -16,13 +16,7 @@ class SelectOperation extends CWizardStep
         $this->content .= "<table class='wizard-data-table'>";
         $this->content .= "<tr><th align = 'right'><span class='wizard-required'>*</span>" . GetMessage('SO_SS_CHOOSE_OPERATOR') . "</th><td>";
 
-        $operations = [
-            'sum' => '+',
-            'sub' => '-',
-            'mult' => '*',
-            'div' => '/'
-        ];
-        $this->content .= WizardTools::ShowSelectField($this, "OPERATOR", array_flip($operations)) . "</td></tr>";
+        $this->content .= WizardTools::ShowSelectField($this, "OPERATOR", array_flip(WizardTools::OPERATIONS)) . "</td></tr>";
 
 
         $this->content .= "</td></tr>";
@@ -62,14 +56,6 @@ class EnterFirstNum extends CWizardStep
         $this->content .= "<br/><div class='wizard-note-box'><span class='wizard-required'>*</span>" . GetMessage('REQ_FIELDS') . "</div>";
     }
 
-    function OnPostForm()
-    {
-        $wizard =& $this->GetWizard();
-        $fOperand = $wizard->GetVar("F_OPERAND");
-        if (empty((int)$fOperand)) {
-            $this->SetError('Не удалось получить число.', 'F_OPERAND');
-        }
-    }
 }
 
 class EnterSecondNum extends CWizardStep
@@ -93,14 +79,6 @@ class EnterSecondNum extends CWizardStep
         $this->content .= "<br/><div class='wizard-note-box'><span class='wizard-required'>*</span>" . GetMessage('REQ_FIELDS') . "</div>";
     }
 
-    function OnPostForm()
-    {
-        $wizard =& $this->GetWizard();
-        $sOperand = $wizard->GetVar("S_OPERAND");
-        if (empty((int)$sOperand)) {
-            $this->SetError('Не удалось получить число.', 'S_OPERAND');
-        }
-    }
 }
 
 class ShowOperation extends CWizardStep
@@ -128,16 +106,6 @@ class ShowOperation extends CWizardStep
         $this->content .= "<tr><th align='right'>" . 'Операция:' . "</th><td>" . $fOperand  . ' ' . $operator . ' ' . $sOperand . "</td></tr>";
         $this->content .= "</table>";
     }
-
-    function OnPostForm()
-    {
-        $wizard =& $this->GetWizard();
-        $sOperand = $wizard->GetVar("S_OPERAND");
-        if (empty((int)$sOperand)) {
-            $this->SetError('Не удалось получить число.', 'S_OPERAND');
-        }
-    }
-
 }
 
 class CalcLogShowResult extends CWizardStep
@@ -147,16 +115,68 @@ class CalcLogShowResult extends CWizardStep
         $this->SetStepID('calc_log_showresult');
 
         $this->SetTitle(GetMessage("CSLSR_INIT_TITLE"));
-        $this->SetSubTitle(GetMessage("CSLSR_INIT_SUBTITLE"));
 
         $this->SetCancelStep("calc_log_showresult");
         $this->SetCancelCaption(GetMessage("CSLSR_INIT_CANCEL_CAPTION"));
     }
+
+    function ShowStep()
+    {
+        $wizard =& $this->GetWizard();
+        $fOperand = $wizard->GetVar("F_OPERAND");
+        if (!is_numeric($fOperand)) {
+            $this->SetError('Первый операнд не число!', 'calc_log_showresult');
+        }
+        $sOperand = $wizard->GetVar("S_OPERAND");
+        if (!is_numeric($sOperand)) {
+            $this->SetError('Второй операнд не число!', 'calc_log_showresult');
+        }
+        $operator = $wizard->GetVar("OPERATOR");
+        $oper = array_flip(WizardTools::OPERATIONS)[$operator];
+        $result = WizardTools::$oper($fOperand, $sOperand);
+
+        $this->content .= "<table class='wizard-data-table'>";
+        if ($result) {
+            $this->content .= "<tr><th align='right'>" . 'Операция:' . "</th><td>" . $fOperand  . ' ' . $operator . ' ' . $sOperand . ' = ' . $result . "</td></tr>";
+        } else {
+            $this->content .= "<tr><th align='right'>" . 'Операция:' . "</th><td>" . $fOperand  . ' ' . $operator . ' ' . $sOperand . ' = ' . 'Деление на ноль!' . "</td></tr>";
+        }
+        $this->content .= "</table>";
+    }
+
+    function OnPostForm()
+    {
+        $wizard =& $this->GetWizard();
+        $fOperand = $wizard->GetVar("F_OPERAND");
+        $sOperand = $wizard->GetVar("S_OPERAND");
+        $operator = $wizard->GetVar("OPERATOR");
+        $oper = array_flip(WizardTools::OPERATIONS)[$operator];
+        $result = WizardTools::$oper($fOperand, $sOperand);
+
+        CEventLog::Add([
+            'SEVERITY'          => 'INFO',
+            'AUDIT_TYPE_ID'     => 'CALC_WIZARD',
+            'MODULE_ID'         => 'main',
+            'ITEM_ID'           => $fOperand.$operator.$sOperand.'='.$result,
+            'DESCRIPTION'       => 'Калькулятор',
+        ]);
+    }
+
 }
 
 // Вспомогательные методы
 class WizardTools
 {
+    /**
+     * @var array
+     */
+    public const OPERATIONS = [
+            'sum' => '+',
+            'sub' => '-',
+            'mult' => '*',
+            'div' => '/'
+        ];
+
     public static function ShowSelectField($obj, $name, $arValues = [], $arAttributes = [])
     {
         $wizard = $obj->GetWizard();
@@ -187,5 +207,29 @@ class WizardTools
 
         return $strReturn;
     }
+
+    public static function sum($a, $b)
+    {
+        return $a + $b;
+    }
+
+    public static function mult($a, $b)
+    {
+        return $a * $b;
+    }
+
+    public static function sub($a, $b)
+    {
+        return $a - $b;
+    }
+
+    public static function div($a, $b)
+    {
+        if ($b == 0) {
+            return null;
+        }
+        return $a / $b;
+    }
+
 }
 
